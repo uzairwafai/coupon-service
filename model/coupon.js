@@ -31,4 +31,4 @@ const structure = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Coupon",structure)
+module.exports = mongoose.model("Coupon",structure);
