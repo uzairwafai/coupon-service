@@ -3,6 +3,7 @@ const structure = new mongoose.Schema({
   code: {
     type: String,
     required: [true, "Coupon code is required"],
+    unique: [true, "Coupon code must be unique"],
   },
   value: {
     type: Number,
@@ -27,8 +28,8 @@ const structure = new mongoose.Schema({
     required: [true, "Minimum amount of cart to avail the coupon is required"],
   },
   maximumDiscount: {
-    type: Number
+    type: Number,
   },
 });
 
-module.exports = mongoose.model("Coupon",structure);
+module.exports = mongoose.model("Coupon", structure);

@@ -5,8 +5,9 @@ const create = (payload) => {
   return coupon.save();
 };
 
-const get = () => {
-  return Coupon.find();
+const get = (page, pageSize) => {
+  const recordsToSkip = (page - 1) * pageSize;
+  return Coupon.find().skip(recordsToSkip).limit(pageSize).sort({_id: -1});
 };
 
 const getByCode = (couponCode, amount) => {
