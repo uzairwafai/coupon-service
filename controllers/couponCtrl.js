@@ -34,5 +34,24 @@ const create = async (req, res) => {
     console.error(err);
   }
 };
+//Listing of coupons
+//todo: add pagination
+const listCoupons = async (req, res) => {
+  const result = await couponRepo.get();
+  res.status(200).json(result);
+};
 
-module.exports = { create };
+//validation
+const validate = async (req, res) => {
+  const amount = req.body.amount;
+  const couponCode = req.body.couponCode;
+  const coupon = await couponRepo.getByCode(couponCode, amount);
+  if (coupon) {
+    const discountAmount = await couponRepo.getDiscountAmount(coupon,amount);
+    res.status(200).json({ isValid: true, discount : discountAmount });
+  } else {
+    res.status(401).json({ isValid: false });
+  }
+};
+
+module.exports = { create, listCoupons, validate };
