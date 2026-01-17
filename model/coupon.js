@@ -11,7 +11,24 @@ const structure = new mongoose.Schema({
   type: {
     type: String,
     enum: ["flat", "percentage"],
-    required: true,
-    default: "flat"
+    required: [true, "type of coupon (percentage or flat) is required"],
+    default: "flat",
+  },
+  fromDate: {
+    type: Date,
+    required: [true, "start date of coupon is required"],
+  },
+  toDate: {
+    type: Date,
+    required: [true, "Expiration date of coupon is required"],
+  },
+  minimumCartAmount: {
+    type: Number,
+    required: [true, "Minimum amount of cart to avail the coupon is required"],
+  },
+  maximumDiscount: {
+    type: Number
   },
 });
+
+module.exports = mongoose.model("Coupon",structure)
