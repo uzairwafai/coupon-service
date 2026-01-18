@@ -9,7 +9,7 @@ const create = async (req, res) => {
     if (toDate < fromDate) {
       res.status(400).json({
         message:
-          "Expiration date(toDate) must be greater or equal to Creation date(fromDate)",
+          "Expiration date(toDate) must be greater or equal to Start date(fromDate)",
       });
     }
 
@@ -24,8 +24,7 @@ const create = async (req, res) => {
           message:
             "maximumDiscount field is mandatory for percentage type coupons",
         });
-      }
-      else if (req.body.maximumDiscount > req.body.minimumCartAmount){
+      } else if (req.body.maximumDiscount > req.body.minimumCartAmount) {
         res.status(400).json({
           message:
             "maximumDiscount can't be greater than the minimum cart value",
@@ -41,7 +40,6 @@ const create = async (req, res) => {
   }
 };
 //Listing of coupons
-//todo: add pagination
 const listCoupons = async (req, res) => {
   const page = req.query.page || 1;
   const pageSize = req.query.size || 5;
