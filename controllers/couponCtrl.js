@@ -25,6 +25,12 @@ const create = async (req, res) => {
             "maximumDiscount field is mandatory for percentage type coupons",
         });
       }
+      else if (req.body.maximumDiscount > req.body.minimumCartAmount){
+        res.status(400).json({
+          message:
+            "maximumDiscount can't be greater than the minimum cart value",
+        });
+      }
     }
     const newCoupon = await couponRepo.create(payload);
     res.status(201);
