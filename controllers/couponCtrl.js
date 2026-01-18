@@ -52,7 +52,7 @@ const validate = async (req, res) => {
     const discountAmount = await couponRepo.getDiscountAmount(coupon, amount);
     res.status(200).json({ isValid: true, discount: discountAmount });
   } else {
-    res.status(400).json({ isValid: false });
+    res.status(200).json({ isValid: false });
   }
 };
 

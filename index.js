@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const couponRouter = require("./routes/couponRouter");
 require("dotenv").config();
+const cors = require("cors");
 
 const app = express();
 
@@ -14,6 +15,6 @@ mongoose
   .connect(process.env.MongoDBConnectionString, {})
   .then(() => console.log("connected to Db"))
   .catch((err) => console.error("Error:", err));
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use("/", couponRouter);
