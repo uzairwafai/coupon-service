@@ -11,7 +11,14 @@ const create = async (req, res) => {
         message:
           "Expiration date(toDate) must be greater or equal to Start date(fromDate)",
       });
-    }
+    } else if (req.body.minimumCartAmount <= 0 || req.body.value <= 0) {
+      res.status(400).json({
+        message: `'Minimum Cart Amount' and 'Value'  must be greater than 0`,
+      });
+    } else if (req.body.maximumDiscount && req.body.maximumDiscount <= 0)
+      res.status(400).json({
+        message: `'Maximum Discount' must be greater than 0`,
+      });
 
     if (req.body.type == "percentage") {
       if (req.body.value <= 0 || req.body.value > 100) {
@@ -51,7 +58,12 @@ const listCoupons = async (req, res) => {
 const validate = async (req, res) => {
   const amount = req.body.amount;
   const couponCode = req.body.couponCode;
+  if (amount <= 0) {
+    res.status(400).json({ message: "Amount must be greater than 0" });
+  }
+
   const coupon = await couponRepo.getByCode(couponCode, amount);
+
   if (coupon) {
     const discountAmount = await couponRepo.getDiscountAmount(coupon, amount);
     res.status(200).json({ isValid: true, discount: discountAmount });
